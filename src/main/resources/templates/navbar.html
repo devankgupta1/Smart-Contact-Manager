@@ -1,0 +1,80 @@
+<nav th:fragment="navbar"
+     class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 w-full sticky top-0 z-50 h-16 flex items-center">
+
+    <div class="w-full px-4 flex items-center justify-between">
+
+        <div class="flex items-center gap-2">
+            <a th:href="@{'/home'}" class="flex items-center shrink-0">
+                <img th:src="@{/images/telephone.png}" class="h-10 w-10" alt="Logo" />
+                <span class="hidden lg:block text-2xl font-extrabold text-blue-600 dark:text-blue-500 ml-1 tracking-tighter">
+                    SCM
+                </span>
+            </a>
+            
+            <div class="hidden md:flex items-center bg-gray-100 dark:bg-gray-700 px-3 py-2 rounded-full ml-2">
+                <i class="fa-solid fa-magnifying-glass text-gray-500 text-sm"></i>
+                <input type="text" placeholder="Search SCM" 
+                       class="bg-transparent border-none focus:ring-0 text-sm ml-2 w-44 dark:text-white placeholder:text-gray-500">
+            </div>
+        </div>
+
+        <div class="hidden lg:flex items-center h-16 space-x-1">
+            <a th:href="@{'/home'}" 
+               class="h-full px-10 flex items-center border-b-4 border-blue-600 text-blue-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
+                <i class="fa-solid fa-house text-xl"></i>
+            </a>
+            <a th:href="@{'/about'}" 
+               class="h-full px-10 flex items-center border-b-4 border-transparent text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
+                <i class="fa-solid fa-circle-info text-xl"></i>
+            </a>
+            <a th:href="@{'/services'}" 
+               class="h-full px-10 flex items-center border-b-4 border-transparent text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
+                <i class="fa-solid fa-layer-group text-xl"></i>
+            </a>
+            <a th:href="@{'/contact'}" 
+               class="h-full px-10 flex items-center border-b-4 border-transparent text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
+                <i class="fa-solid fa-envelope text-xl"></i>
+            </a>
+        </div>
+
+        <div class="flex items-center gap-2 md:order-2">
+
+            <button id="theme_change_button"
+                    class="h-10 w-10 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
+                <i class="fa-solid fa-circle-half-stroke dark:text-white text-gray-700"></i>
+            </button>
+
+            <div class="hidden md:flex items-center gap-2 ml-2">
+                <a th:href="@{'/login'}"
+                   class="bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white font-semibold px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-all">
+                    Log In
+                </a>
+                <a th:href="@{'/signup'}"
+                   class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg transition-all shadow-md active:scale-95">
+                    Sign Up
+                </a>
+            </div>
+
+            <button data-collapse-toggle="navbar-sticky"
+                    type="button"
+                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-gray-500 rounded-full lg:hidden hover:bg-gray-100 dark:hover:bg-gray-700">
+                <i class="fa-solid fa-bars text-lg"></i>
+            </button>
+        </div>
+
+    </div>
+
+    <div class="hidden w-full absolute top-16 left-0 bg-white dark:bg-gray-800 shadow-xl lg:hidden border-b border-gray-200 dark:border-gray-700" id="navbar-sticky">
+        <ul class="flex flex-col p-4 space-y-2">
+            <li><a th:href="@{'/home'}" class="block p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg dark:text-white font-medium">Home</a></li>
+            <li><a th:href="@{'/about'}" class="block p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg dark:text-white font-medium">About</a></li>
+            <li><a th:href="@{'/services'}" class="block p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg dark:text-white font-medium">Services</a></li>
+            <li><a th:href="@{'/contact'}" class="block p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg dark:text-white font-medium">Contact</a></li>
+            
+            <div class="pt-4 border-t border-gray-100 dark:border-gray-700 flex flex-col gap-2">
+                <a th:href="@{'/login'}" class="w-full text-center py-3 bg-gray-100 dark:bg-gray-700 rounded-xl font-bold dark:text-white">Log In</a>
+                <a th:href="@{'/signup'}" class="w-full text-center py-3 bg-blue-600 text-white rounded-xl font-bold">Sign Up</a>
+            </div>
+        </ul>
+    </div>
+</nav>

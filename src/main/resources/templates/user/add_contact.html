@@ -1,0 +1,223 @@
+<!doctype html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="base :: parent(~{::content}, ~{::title}, ~{::script})"
+>
+<head>
+  <title>Add Contact</title>
+</head>
+
+<body>
+
+<div th:fragment="content">
+
+  <!-- ❌ REMOVE SIDEBAR (BASE HANDLE KAR RAHA HAI) -->
+  <!--
+  <div class="col-span-3">
+    <div th:if="${user != null}"
+         th:replace="user/sidebar :: sidebar"></div>
+  </div>
+  -->
+
+  <!-- MAIN -->
+  <div class="pt-16 px-4 md:px-6 flex justify-center items-start min-h-screen">
+
+    <!-- 🔥 CARD -->
+    <div class="w-full max-w-2xl border rounded-lg p-4 shadow bg-white dark:bg-gray-800 text-left mb-6">
+
+      <h1 class="text-xl font-semibold text-gray-800 dark:text-white text-center">
+        Add New Contact
+      </h1>
+
+      <p class="mt-1 text-sm text-gray-500 text-center">
+        Store and manage your contact easily.
+      </p>
+
+      <!-- FORM -->
+      <div class="mt-4">
+
+        <form 
+          th:action="@{/user/contact/save}" 
+          th:object="${contactForm}" 
+          method="post"
+          enctype="multipart/form-data"
+          class="space-y-3 text-sm w-full text-left">
+
+          <!-- NAME -->
+          <div class="text-left">
+            <label class="block mb-1 text-gray-700 dark:text-gray-300">
+              Contact Name
+            </label>
+            <div class="relative mb-1">
+              <i class="fa-regular fa-user absolute left-3 top-3 text-gray-400"></i>
+              <input type="text" th:field="*{name}" placeholder="Enter full name"
+                class="w-full pl-9 pr-3 py-2 rounded-md border bg-white dark:bg-gray-800 dark:text-white
+                placeholder:text-gray-400 dark:placeholder:text-gray-500
+                focus:ring-2 focus:ring-blue-500 outline-none"/>
+            </div>
+            <p class="text-red-500"
+               th:if="${#fields.hasErrors('name')}"
+               th:errors="*{name}">
+            </p>
+          </div>
+
+          <!-- EMAIL -->
+          <div class="text-left">
+            <label class="block mb-1 text-gray-700 dark:text-gray-300">
+              Contact Email
+            </label>
+            <div class="relative mb-1">
+              <i class="fa-regular fa-envelope absolute left-3 top-3 text-gray-400"></i>
+              <input th:field="*{email}" type="email" placeholder="example@gmail.com"
+                class="w-full pl-9 pr-3 py-2 rounded-md border bg-white dark:bg-gray-800 dark:text-white
+                placeholder:text-gray-400 dark:placeholder:text-gray-500
+                focus:ring-2 focus:ring-blue-500 outline-none"/>
+            </div>
+            <p class="text-red-500"
+               th:if="${#fields.hasErrors('email')}"
+               th:errors="*{email}">
+            </p>
+          </div>
+
+          <!-- PHONE -->
+          <div class="text-left">
+            <label class="block mb-1 text-gray-700 dark:text-gray-300">
+              Contact Phone
+            </label>
+            <div class="relative mb-1">
+              <i class="fa-solid fa-phone absolute left-3 top-3 text-gray-400"></i>
+              <input th:field="*{phoneNumber}" type="text" placeholder="Enter phone number"
+                class="w-full pl-9 pr-3 py-2 rounded-md border bg-white dark:bg-gray-800 dark:text-white
+                placeholder:text-gray-400 dark:placeholder:text-gray-500
+                focus:ring-2 focus:ring-blue-500 outline-none"/>
+            </div>
+            <p class="text-red-500"
+               th:if="${#fields.hasErrors('phoneNumber')}"
+               th:errors="*{phoneNumber}">
+            </p>
+          </div>
+
+          <!-- ADDRESS -->
+          <div class="text-left">
+            <label class="block mb-1 text-gray-700 dark:text-gray-300">
+              Contact Address
+            </label>
+            <div class="relative mb-1">
+              <textarea th:field="*{address}" rows="2" placeholder="Enter full address"
+                class="w-full p-2 rounded-md border bg-white dark:bg-gray-800 dark:text-white
+                placeholder:text-gray-400 dark:placeholder:text-gray-500
+                focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
+            </div>
+            <p class="text-red-500"
+               th:if="${#fields.hasErrors('address')}"
+               th:errors="*{address}">
+            </p>
+          </div>
+
+          <!-- DESCRIPTION -->
+          <div class="text-left">
+            <label class="block mb-1 text-gray-700 dark:text-gray-300">
+              Contact Description
+            </label>
+            <textarea th:field="*{description}" rows="2" placeholder="Write something about contact"
+              class="w-full p-2 rounded-md border bg-white dark:bg-gray-800 dark:text-white
+              placeholder:text-gray-400 dark:placeholder:text-gray-500
+              focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
+          </div>
+
+          <!-- LINKS -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-left">
+
+            <div class="relative">
+              <i class="fa-solid fa-globe absolute left-3 top-3 text-gray-400"></i>
+              <input th:field="*{websiteLink}" type="text" placeholder="http://yourwebsite.com"
+                class="w-full pl-9 pr-3 py-2 rounded-md border bg-white dark:bg-gray-800 dark:text-white
+                placeholder:text-gray-400 dark:placeholder:text-gray-500
+                focus:ring-2 focus:ring-blue-500 outline-none"/>
+            </div>
+
+            <div class="relative">
+              <i class="fa-brands fa-linkedin absolute left-3 top-3 text-gray-400"></i>
+              <input th:field="*{linkedInLink}" type="text" placeholder="http://linkedin.com/"
+                class="w-full pl-9 pr-3 py-2 rounded-md border bg-white dark:bg-gray-800 dark:text-white
+                placeholder:text-gray-400 dark:placeholder:text-gray-500
+                focus:ring-2 focus:ring-blue-500 outline-none"/>
+            </div>
+
+          </div>
+
+          <!-- IMAGE -->
+          <div class="text-left">
+            <label class="block mb-1 text-gray-700 dark:text-gray-300">
+              Contact Image
+            </label>
+
+            <div class="flex items-center gap-3 flex-wrap">
+              <label class="px-4 py-2 bg-gray-100 dark:bg-gray-700 border rounded-md cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 text-sm">
+                Choose File
+                <input th:field="*{contactImage}" type="file" class="hidden" id="fileInput">
+              </label>
+
+              <span id="fileName" class="text-gray-400 text-sm">
+                No file chosen
+              </span>
+            </div>
+
+            <div class="flex justify-center mt-3">
+              <img
+                src=""
+                id="upload_image_preview"
+                class="max-h-52 border border-gray-300 dark:border-gray-600 rounded-lg object-cover shadow-sm">
+            </div>
+
+          </div>
+
+          <!-- FAVORITE -->
+          <div class="flex items-center gap-2 text-left">
+            <input th:field="*{favorite}" type="checkbox">
+            <span class="text-xs text-gray-600 dark:text-gray-300">
+              Mark as favorite
+            </span>
+          </div>
+
+          <!-- BUTTONS -->
+          <div class="flex flex-col sm:flex-row gap-2 justify-center">
+            <button class="px-4 py-1.5 bg-black text-white rounded">
+              Add Contact
+            </button>
+            <button type="reset" class="px-4 py-1.5 bg-gray-600 text-white rounded">
+              Reset
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div th:fragment="script" th:remove="tag">
+
+<script th:src ="@{'/js/admin.js'}"></script>
+
+<script>
+  const fileInput = document.getElementById("fileInput");
+  const fileName = document.getElementById("fileName");
+
+  if (fileInput) {
+    fileInput.addEventListener("change", function () {
+      fileName.textContent = this.files.length > 0 
+        ? this.files[0].name 
+        : "No file chosen";
+    });
+  }
+</script>
+
+</div>
+
+</body>
+</html>

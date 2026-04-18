@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="base :: parent(~{::content}, ~{::title}, ~{::script})">
+
+<head>
+    <title th:fragment="title">Profile</title>
+</head>
+
+<body>
+
+<!-- CONTENT -->
+<div th:fragment="content">
+
+    <!-- MAIN -->
+    <div class="pt-16 px-4 md:px-6 flex justify-center">
+
+        <!-- 🍏 PROFILE CARD -->
+        <div class="w-full max-w-4xl bg-white/60 dark:bg-gray-800/60 backdrop-blur-xl 
+                    rounded-3xl shadow-lg border border-gray-200 dark:border-gray-700 
+                    p-4 md:p-8 mb-10">
+
+            <!-- 🔥 TOP -->
+            <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-center sm:text-left">
+
+                <img class="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-4 border-white shadow"
+                     th:src="${LoggedInUser.profileLink != null} ? ${LoggedInUser.profileLink} : '/images/default.png'" />
+
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-white"
+                        th:text="${LoggedInUser.name}"></h2>
+
+                    <p class="text-gray-500 text-sm"
+                       th:text="${LoggedInUser.emailId}"></p>
+
+                    <span class="inline-block mt-2 px-3 py-1 text-xs rounded-full bg-green-100 text-green-600">
+                        Active
+                    </span>
+                </div>
+
+            </div>
+
+            <!-- DIVIDER -->
+            <div class="my-6 border-t border-gray-200 dark:border-gray-700"></div>
+
+            <!-- 🔥 DETAILS -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
+
+                <div>
+                    <p class="text-gray-500">User ID</p>
+                    <p class="font-medium text-gray-800 dark:text-white"
+                       th:text="${LoggedInUser.userId}"></p>
+                </div>
+
+                <div>
+                    <p class="text-gray-500">Email</p>
+                    <p class="font-medium text-gray-800 dark:text-white"
+                       th:text="${LoggedInUser.emailId}"></p>
+                </div>
+
+                <div>
+                    <p class="text-gray-500">Phone</p>
+                    <p class="font-medium text-gray-800 dark:text-white"
+                       th:text="${LoggedInUser.phoneNumber}"></p>
+                </div>
+
+                <div>
+                    <p class="text-gray-500">Provider</p>
+                    <p class="font-medium text-gray-800 dark:text-white"
+                       th:text="${LoggedInUser.provider}"></p>
+                </div>
+
+                <div>
+                    <p class="text-gray-500">Email Status</p>
+                    <span th:if="${LoggedInUser.emailVerified}"
+                          class="text-green-500 font-medium">Verified</span>
+
+                    <span th:if="${!LoggedInUser.emailVerified}"
+                          class="text-red-500 font-medium">Not Verified</span>
+                </div>
+
+                <div>
+                    <p class="text-gray-500">Account Status</p>
+                    <span class="text-green-500 font-medium">Active</span>
+                </div>
+
+                <div>
+                    <p class="text-gray-500">Total Contacts</p>
+                    <p class="font-medium text-gray-800 dark:text-white"
+                       th:text="${LoggedInUser.contacts.size()}"></p>
+                </div>
+
+                <!-- ROLES -->
+                <div>
+                    <p class="text-gray-500">Roles</p>
+                    <div>
+                        <span th:each="r : ${LoggedInUser.roleList}"
+                              class="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded text-xs mr-1"
+                              th:text="${r}"></span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ABOUT -->
+            <div class="mt-6 text-center sm:text-left">
+                <p class="text-gray-500">About</p>
+                <p class="text-sm text-gray-700 dark:text-gray-300"
+                   th:text="${LoggedInUser.about != null} ? ${LoggedInUser.about} : 'No description available'"></p>
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
+
+                <a th:href="@{'/user/edit-profile'}"
+                   class="w-full sm:w-auto text-center px-5 py-2 rounded-xl bg-black text-white text-sm hover:scale-105 transition">
+                    Edit Profile
+                </a>
+
+                <button class="w-full sm:w-auto px-5 py-2 rounded-xl bg-gray-200 dark:bg-gray-700 text-sm hover:scale-105 transition">
+                    Change Password
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- SCRIPT -->
+<div th:fragment="script" th:remove="tag">
+    <script>
+        console.log("Profile Loaded 🍏");
+    </script>
+</div>
+
+</body>
+</html>

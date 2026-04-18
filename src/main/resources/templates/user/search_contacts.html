@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      th:replace="~{base :: parent(~{::content}, ~{::title}, ~{::script})}">
+
+<head>
+    <title th:fragment="title">Search Results - SCM</title>
+</head>
+
+<body>
+
+<div th:fragment="content">
+
+    <div th:if="${LoggedInUser}" th:replace="~{user/sidebar :: sidebar}"></div>
+
+    <div class="ml-0 md:ml-64 pt-16 p-4 md:p-6 min-h-screen bg-gray-50 dark:bg-gray-950 transition-all duration-300">
+
+        <!-- HEADER -->
+        <div class="mb-6">
+            <h1 class="text-2xl md:text-4xl font-bold text-gray-800 dark:text-white">
+                Search Results
+            </h1>
+            <p class="mt-2 text-gray-600 dark:text-gray-400">
+                Found <span th:text="${pageContact.totalElements}"></span> contacts
+            </p>
+        </div>
+
+        <!-- SEARCH -->
+        <form th:action="@{/user/contact/search}" method="get" class="mb-8">
+            <div class="bg-white dark:bg-gray-900 shadow-sm border border-gray-200 dark:border-gray-800 p-4 md:p-5 rounded-xl">
+                <div class="flex flex-col sm:flex-row gap-3 sm:items-center">
+
+                    <select name="field"
+                        class="h-11 px-4 border rounded-lg w-full sm:w-auto">
+                        <option value="name" th:selected="${field == 'name'}">Name</option>
+                        <option value="phone" th:selected="${field == 'phone'}">Phone</option>
+                        <option value="email" th:selected="${field == 'email'}">Email</option>
+                    </select>
+
+                    <div class="relative flex-grow w-full sm:max-w-md">
+                        <input type="text" name="keyword" th:value="${keyword}"
+                               class="h-11 w-full px-4 border rounded-lg"
+                               placeholder="Search...">
+                    </div>
+
+                    <button type="submit"
+                        class="h-11 px-6 bg-blue-600 text-white rounded-lg w-full sm:w-auto">
+                        Search
+                    </button>
+
+                </div>
+            </div>
+        </form>
+
+        <!-- TABLE (NO CHECKBOX) -->
+        <div class="relative overflow-x-auto shadow-md sm:rounded-xl border border-gray-200 dark:border-gray-800">
+
+            <table class="w-full min-w-[600px] text-sm text-left text-gray-500 dark:text-gray-400">
+
+                <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-800 dark:text-gray-300 border-b dark:border-gray-700">
+                    <tr>
+                        <th class="px-6 py-4">Name</th>
+                        <th class="px-6 py-4">Phone</th>
+                        <th class="px-6 py-4">Links</th>
+                        <th class="px-6 py-4">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="c : ${pageContact.getContent()}"
+                        class="bg-white dark:bg-gray-900 border-b dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+
+                        <!-- NAME -->
+                        <td class="flex items-center px-6 py-4 text-gray-900 dark:text-white">
+                            <div class="relative">
+                                <img th:src="${c.pictures}"
+                                     class="w-10 h-10 rounded-full border-2 object-cover">
+
+                                <i th:if="${c.favorite}"
+                                   class="fa-solid fa-star text-yellow-400 absolute -top-1 -right-1 text-xs bg-white rounded-full"></i>
+                            </div>
+
+                            <div class="ps-3">
+                                <div class="text-base font-bold" th:text="${c.name}"></div>
+                                <div class="text-xs text-gray-500" th:text="${c.email}"></div>
+                            </div>
+                        </td>
+
+                        <!-- PHONE -->
+                        <td class="px-6 py-4">
+                            <i class="fa-solid fa-phone mr-2 text-gray-400 text-xs"></i>
+                            <span th:text="${c.phoneNumber}"></span>
+                        </td>
+
+                        <!-- LINKS -->
+                        <td class="px-6 py-4">
+                            <div class="flex gap-4 text-lg">
+                                <a th:href="${c.linkedInLink}"><i class="fa-brands fa-linkedin"></i></a>
+                                <a th:href="${c.githubLink}"><i class="fa-brands fa-github"></i></a>
+                                <a th:href="${c.websiteLink}"><i class="fa-solid fa-link"></i></a>
+                            </div>
+                        </td>
+
+                        <!-- ACTION -->
+                        <td class="px-6 py-4">
+                            <div class="flex gap-4">
+
+                                <button th:attr="onclick='loadContact(\'' + ${c.id} + '\')'"
+                                        class="text-blue-500 hover:scale-125">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                                <a th:href="@{'/user/contact/view/' + ${c.id}}"
+                                   class="text-green-500 hover:scale-125">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+
+                                <button th:attr="onclick='deleteContact(\'' + ${c.id} + '\')'"
+                                        class="text-red-500 hover:scale-125">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button>
+
+                            </div>
+                        </td>
+
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+        <!-- MODAL (VERY IMPORTANT FOR VIEW) -->
+        <div class="mt-8 flex justify-center">
+            <div th:replace="~{user/contact_modals :: contact}"></div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- SCRIPT (DELETE + VIEW WORK) -->
+<script th:src="@{/js/contact.js}"></script>
+
+</body>
+</html>

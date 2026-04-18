@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base :: parent(~{::section}, ~{::title}, ~{::script})}">
+
+<head>
+    <title>Services - SCM</title>
+</head>
+
+<body>
+
+<section class="px-4 md:px-20 py-10 space-y-20">
+
+    <!-- 🔥 HERO (EDITORIAL STYLE) -->
+    <div class="grid md:grid-cols-2 gap-10 items-center">
+
+        <!-- LEFT -->
+        <div>
+            <h1 class="text-7xl font-extrabold leading-tight">
+                What<br>
+                We<br>
+                Do.
+            </h1>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="text-gray-600 text-lg">
+            No fluff. No noise.  
+            Just tools that help you control your contacts like a machine ⚡
+        </div>
+
+    </div>
+
+    <!-- 🔥 SERVICES LIST (RAW STYLE) -->
+    <div class="space-y-10">
+
+        <div class="border-b pb-6 hover:translate-x-2 transition">
+            <h2 class="text-2xl font-bold">01 — Contact Engine</h2>
+            <p class="text-gray-500 mt-2">Add, edit, delete contacts instantly.</p>
+        </div>
+
+        <div class="border-b pb-6 hover:translate-x-2 transition">
+            <h2 class="text-2xl font-bold">02 — Search System</h2>
+            <p class="text-gray-500 mt-2">Find anything in milliseconds.</p>
+        </div>
+
+        <div class="border-b pb-6 hover:translate-x-2 transition">
+            <h2 class="text-2xl font-bold">03 — Secure Core</h2>
+            <p class="text-gray-500 mt-2">Data locked. Always safe.</p>
+        </div>
+
+        <div class="border-b pb-6 hover:translate-x-2 transition">
+            <h2 class="text-2xl font-bold">04 — Responsive UI</h2>
+            <p class="text-gray-500 mt-2">Clean experience across all devices.</p>
+        </div>
+
+    </div>
+
+    <!-- 🔥 BIG STATEMENT (RAW GENZ STYLE) -->
+    <div class="bg-black text-white p-12 text-center">
+
+        <h2 class="text-4xl font-bold">
+            Simple tools.<br>
+            Powerful control.
+        </h2>
+
+    </div>
+
+    <!-- 🔥 CTA (MINIMAL) -->
+    <div class="flex justify-between items-center">
+
+        <h2 class="text-2xl font-semibold">
+            Ready to take control?
+        </h2>
+
+        <a th:href="@{/signup}"
+           class="border px-6 py-3 hover:bg-black hover:text-white transition">
+            Start →
+        </a>
+
+    </div>
+
+</section>
+
+<script>
+    console.log("Different services loaded");
+</script>
+
+</body>
+</html>

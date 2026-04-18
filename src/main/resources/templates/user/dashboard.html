@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="base :: parent(~{::content}, ~{::title}, ~{::script})">
+
+<head>
+    <title>Dashboard</title>
+</head>
+
+<body class="bg-gray-100 dark:bg-gray-900">
+
+<div th:fragment="content">
+
+    <!-- MAIN -->
+    <div class="pt-16 px-4 md:px-6 min-h-screen flex flex-col gap-4 overflow-auto">
+
+        <!-- 🔥 TOP CARDS -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+            <!-- PROFILE -->
+            <div class="bg-white/60 dark:bg-gray-800/60 backdrop-blur-lg 
+                        p-3 rounded-2xl shadow-sm border border-gray-200 
+                        dark:border-gray-700 flex items-center gap-3 h-24">
+
+                <img class="w-12 h-12 rounded-full object-cover"
+                     th:src="${LoggedInUser.profileLink != null} ? ${LoggedInUser.profileLink} : '/images/default.png'" />
+
+                <div>
+                    <p class="text-xs text-gray-500">User</p>
+                    <h2 class="text-sm font-semibold text-gray-800 dark:text-white"
+                        th:text="${LoggedInUser.name}"></h2>
+                </div>
+
+            </div>
+
+            <!-- CONTACTS -->
+            <div class="bg-white/60 dark:bg-gray-800/60 backdrop-blur-lg 
+                        p-4 rounded-2xl shadow-sm border border-gray-200 
+                        dark:border-gray-700 text-center h-24 flex flex-col justify-center">
+
+                <p class="text-xs text-gray-500">Contacts</p>
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-white"
+                    th:text="${totalContacts}"></h2>
+
+            </div>
+
+            <!-- FAVORITES -->
+            <div class="bg-white/60 dark:bg-gray-800/60 backdrop-blur-lg 
+                        p-4 rounded-2xl shadow-sm border border-gray-200 
+                        dark:border-gray-700 text-center h-24 flex flex-col justify-center">
+
+                <p class="text-xs text-gray-500">Favorites</p>
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-white"
+                    th:text="${favoriteContacts}"></h2>
+
+            </div>
+
+            <!-- STATUS -->
+            <div class="bg-white/60 dark:bg-gray-800/60 backdrop-blur-lg 
+                        p-4 rounded-2xl shadow-sm border border-gray-200 
+                        dark:border-gray-700 text-center h-24 flex flex-col justify-center">
+
+                <p class="text-xs text-gray-500">Status</p>
+                <h2 class="text-sm font-semibold text-green-500">Active</h2>
+
+            </div>
+
+        </div>
+
+        <!-- 🔥 MAIN CONTENT -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 flex-1">
+
+            <!-- CHART -->
+            <div class="lg:col-span-2 bg-white/60 dark:bg-gray-800/60 backdrop-blur-lg 
+                        p-5 rounded-2xl shadow-sm border border-gray-200 
+                        dark:border-gray-700 flex flex-col min-h-[250px]">
+
+                <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3">
+                    Contacts Growth
+                </h2>
+
+                <div class="flex-1">
+                    <canvas id="chart1"></canvas>
+                </div>
+
+            </div>
+
+            <!-- RECENT CONTACTS -->
+            <div class="bg-white/60 dark:bg-gray-800/60 backdrop-blur-lg 
+                        p-5 rounded-2xl shadow-sm border border-gray-200 
+                        dark:border-gray-700 flex flex-col min-h-[250px]">
+
+                <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3">
+                    Recent Contacts
+                </h2>
+
+                <div class="overflow-y-auto flex-1 space-y-2 text-sm max-h-[300px]">
+
+                    <div th:each="c : ${contacts}"
+                         class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+
+                        <p class="font-medium text-gray-800 dark:text-white"
+                           th:text="${c.name}"></p>
+
+                        <p class="text-xs text-gray-500"
+                           th:text="${c.email}"></p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script th:inline="javascript">
+
+    const ctx = document.getElementById('chart1');
+
+    let rawData = /*[[${chartData}]]*/ [];
+
+    const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+    let labels = [];
+    let realData = [];
+
+    rawData.forEach(item => {
+        labels.push(months[item[0] - 1]);
+        realData.push(item[1]);
+    });
+
+    // 🔥 START WITH ZERO LINE
+    let zeroData = new Array(realData.length).fill(0);
+
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: zeroData,
+                borderWidth: 2,
+                tension: 0.4,
+                fill: false
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            animation: {
+                duration: 1500,
+                easing: 'easeOutCubic'
+            },
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+
+    // 🔥 AFTER LOAD → GROW TO REAL DATA
+    setTimeout(() => {
+        chart.data.datasets[0].data = realData;
+        chart.update();
+    }, 200); // slight delay
+
+</script>
+</body>
+</html>

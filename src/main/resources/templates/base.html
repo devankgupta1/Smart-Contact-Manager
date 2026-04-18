@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html class="light min-h-screen"
+      lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:fragment="parent(content, title, script)">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <th:block th:replace="${title}">
+        <title>Base Page</title>
+    </th:block>
+
+    <link rel="stylesheet" th:href="@{'/css/output.css'}">
+    <link rel="stylesheet" th:href="@{'/css/style.css'}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body class="min-h-screen bg-gray-50 dark:bg-gray-900 text-black dark:text-white antialiased">
+
+    
+<header th:if="${hideNavbar == null}">
+
+    <div th:if="${LoggedInUser != null}">
+        <div th:replace="user/user_navbar :: user-navbar"></div>
+    </div>
+
+    <div th:if="${LoggedInUser == null}">
+        <div th:replace="navbar :: navbar"></div>
+    </div>
+
+</header>
+
+    <!-- 🔥 SIDEBAR -->
+    <div th:if="${LoggedInUser != null}">
+        <div th:replace="user/sidebar :: sidebar"></div>
+    </div>
+
+    <!-- 🔥 MAIN CONTENT -->
+    <main th:class="${LoggedInUser != null} ? 
+        'ml-0 md:ml-64 pt-16 px-4 md:px-6 min-h-screen transition-all duration-300' : 
+        'flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8'">
+
+        <div th:class="${LoggedInUser != null} ? 'w-full' : ''">
+            <div th:replace="${content}"></div>
+        </div>
+
+    </main>
+
+    <!-- 🔥 FOOTER -->
+<footer 
+  th:class="${LoggedInUser != null} ? 
+  'border-t border-gray-200 dark:border-gray-800 ml-0 md:ml-64 transition-all duration-300' : 
+  'border-t border-gray-200 dark:border-gray-800 w-full'">
+
+    <div th:replace="footer :: footer"></div>
+
+</footer>
+
+    <!-- 🔥 SCRIPT -->
+    <section th:replace="${script}"></section>
+
+    <script th:src="@{'/js/script.js'}"></script>
+
+    <!-- 🔥 FINAL SIDEBAR JS -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const toggleBtn = document.getElementById("sidebarToggle");
+        const sidebar = document.getElementById("logo-sidebar");
+        const overlay = document.getElementById("sidebarOverlay");
+
+        if (toggleBtn && sidebar && overlay) {
+
+            toggleBtn.addEventListener("click", () => {
+                sidebar.classList.toggle("-translate-x-full");
+                overlay.classList.toggle("hidden");
+            });
+
+            overlay.addEventListener("click", () => {
+                sidebar.classList.add("-translate-x-full");
+                overlay.classList.add("hidden");
+            });
+        }
+    });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+document.addEventListener("click", function (e) {
+
+  const sidebar = document.getElementById("logo-sidebar");
+  const overlay = document.getElementById("sidebarOverlay");
+
+  // Hamburger click
+  if (e.target.closest("#sidebarToggle")) {
+    sidebar.classList.toggle("-translate-x-full");
+    overlay.classList.toggle("hidden");
+  }
+
+  // Overlay click
+  if (e.target.id === "sidebarOverlay") {
+    sidebar.classList.add("-translate-x-full");
+    overlay.classList.add("hidden");
+  }
+
+});
+</script>
+</body>
+</html>

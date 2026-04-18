@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base :: parent(~{::section}, ~{::title}, ~{::script})}">
+
+<head>
+    <title>SCM - Control Center</title>
+</head>
+
+<body>
+
+<section class="px-4 md:px-20 py-6 md:py-10 space-y-12 md:space-y-20">
+
+    <div class="relative">
+
+        <div class="bg-gray-900 text-white rounded-3xl p-8 md:p-16 shadow-2xl">
+            <div class="max-w-2xl">
+                <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
+                    Your Contact <br class="hidden md:block">
+                    <span class="text-blue-400">Command Center</span> ⚡
+                </h1>
+
+                <p class="text-gray-400 mt-4 text-base md:text-lg">
+                    Control, manage and access everything instantly. Clean, fast, and optimized for your workflow.
+                </p>
+
+                <div class="mt-8 flex flex-wrap gap-4">
+                    <a th:href="@{/login}"
+                       class="bg-blue-500 hover:bg-blue-600 px-8 py-3 rounded-xl font-bold transition-all text-center flex-1 md:flex-none">
+                        Login
+                    </a>
+
+                    <a th:href="@{/signup}"
+                       class="bg-white text-black hover:bg-gray-200 px-8 py-3 rounded-xl font-bold transition-all text-center flex-1 md:flex-none">
+                        Start Now
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex md:block gap-4 mt-6 md:mt-0 overflow-x-auto md:overflow-visible pb-4 md:pb-0">
+            
+            <div class="flex-shrink-0 md:absolute -top-6 right-6 bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-5 w-44 border border-gray-100 dark:border-gray-700 transform hover:-translate-y-2 transition-transform">
+                <p class="text-gray-500 text-xs uppercase font-bold tracking-wider">Contacts</p>
+                <h2 class="text-3xl font-black text-gray-900 dark:text-white">1,284</h2>
+                <div class="w-10 h-1 bg-blue-500 mt-2 rounded-full"></div>
+            </div>
+
+            <div class="flex-shrink-0 md:absolute -bottom-6 right-56 bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-5 w-44 border border-gray-100 dark:border-gray-700 transform hover:-translate-y-2 transition-transform">
+                <p class="text-gray-500 text-xs uppercase font-bold tracking-wider">Active Users</p>
+                <h2 class="text-3xl font-black text-gray-900 dark:text-white">342</h2>
+                <div class="w-10 h-1 bg-purple-500 mt-2 rounded-full"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+        
+        <div class="bg-white dark:bg-gray-800 shadow-md hover:shadow-xl rounded-2xl p-6 text-center cursor-pointer transform hover:scale-105 transition-all border border-gray-50 dark:border-gray-700">
+            <span class="text-3xl mb-2 block">➕</span>
+            <p class="font-bold text-gray-700 dark:text-gray-200">Add Contact</p>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 shadow-md hover:shadow-xl rounded-2xl p-6 text-center cursor-pointer transform hover:scale-105 transition-all border border-gray-50 dark:border-gray-700">
+            <span class="text-3xl mb-2 block">🔍</span>
+            <p class="font-bold text-gray-700 dark:text-gray-200">Search</p>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 shadow-md hover:shadow-xl rounded-2xl p-6 text-center cursor-pointer transform hover:scale-105 transition-all border border-gray-50 dark:border-gray-700">
+            <span class="text-3xl mb-2 block">📁</span>
+            <p class="font-bold text-gray-700 dark:text-gray-200">Groups</p>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 shadow-md hover:shadow-xl rounded-2xl p-6 text-center cursor-pointer transform hover:scale-105 transition-all border border-gray-50 dark:border-gray-700">
+            <span class="text-3xl mb-2 block">⚙️</span>
+            <p class="font-bold text-gray-700 dark:text-gray-200">Settings</p>
+        </div>
+
+    </div>
+
+    <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-lg p-6 md:p-10 border border-gray-50 dark:border-gray-700">
+
+        <div class="flex items-center justify-between mb-8">
+            <h2 class="text-2xl font-bold">Recent Activity</h2>
+            <span class="text-blue-500 text-sm font-semibold cursor-pointer">View All</span>
+        </div>
+
+        <div class="divide-y divide-gray-100 dark:divide-gray-700">
+
+            <div class="flex justify-between py-4 group">
+                <div class="flex items-center gap-3">
+                    <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                    <span class="text-gray-700 dark:text-gray-300 font-medium">Added new contact</span>
+                </div>
+                <span class="text-gray-400 text-xs">2 min ago</span>
+            </div>
+
+            <div class="flex justify-between py-4 group">
+                <div class="flex items-center gap-3">
+                    <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                    <span class="text-gray-700 dark:text-gray-300 font-medium">Updated profile</span>
+                </div>
+                <span class="text-gray-400 text-xs">10 min ago</span>
+            </div>
+
+            <div class="flex justify-between py-4 group">
+                <div class="flex items-center gap-3">
+                    <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                    <span class="text-gray-700 dark:text-gray-300 font-medium">Deleted contact</span>
+                </div>
+                <span class="text-gray-400 text-xs">1 hour ago</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="text-center pb-10">
+        <h2 class="text-3xl md:text-4xl font-black">Ready to upgrade?</h2>
+        <p class="text-gray-500 mt-2 mb-8">Join the thousands managing connections better.</p>
+
+        <a th:href="@{/signup}"
+           class="bg-black text-white dark:bg-blue-600 px-10 py-4 rounded-2xl font-bold hover:scale-105 active:scale-95 transition-all shadow-xl">
+            Create Free Account →
+        </a>
+    </div>
+
+</section>
+
+<script>
+    console.log("Responsive Command Center Loaded");
+</script>
+
+</body>
+</html>
